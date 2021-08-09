@@ -1,7 +1,7 @@
 #[derive(serde::Deserialize)]
 pub struct Settings {
     pub database: DatabaseSettings,
-    pub application_port: u16
+    pub application_port: u16,
 }
 
 #[derive(serde::Deserialize)]
@@ -15,10 +15,21 @@ pub struct DatabaseSettings {
 
 impl DatabaseSettings {
     pub fn connection_string(&self) -> String {
-        format!(
+        return format!(
             "postgres://{}:{}@{}:{}/{}",
-            self.username, self.password, self.host, self.port, self.database_name
-        )
+            self.username,
+            self.password,
+            self.host,
+            self.port,
+            self.database_name
+        );
+    }
+
+    pub fn connection_string_without_db(&self) -> String {
+        return format!(
+            "postgres://{}:{}@{}:{}",
+            self.username, self.password, self.host, self.port
+        );
     }
 }
 
